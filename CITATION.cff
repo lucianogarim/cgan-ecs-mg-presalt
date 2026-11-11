@@ -1,0 +1,24 @@
+cff-version: 1.2.0
+message: "If you use this code or data, please cite the article below."
+title: "cgan-ecs-mg-presalt: leave-one-well-out comparison of a geochemically informed conditional GAN and random forests for ECS magnesium logs"
+authors:
+  - family-names: Garcia
+    given-names: Luciano Garim
+  - family-names: Ramos
+    given-names: Gabriel de Oliveira
+  - family-names: Silveira
+    given-names: Ariane Santos da
+license: MIT
+repository-code: "https://github.com/lucianogarim/cgan-ecs-mg-presalt"
+preferred-citation:
+  type: article
+  title: "Reconstructing elemental capture spectroscopy magnesium logs in pre-salt carbonates: a leave-one-well-out comparison of a geochemically informed conditional GAN and random forests"
+  authors:
+    - family-names: Garcia
+      given-names: Luciano Garim
+    - family-names: Ramos
+      given-names: Gabriel de Oliveira
+    - family-names: Silveira
+      given-names: Ariane Santos da
+  journal: "Applied Computing and Geosciences"
+  status: submitted
