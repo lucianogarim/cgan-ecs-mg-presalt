@@ -1,6 +1,6 @@
 # cgan-ecs-mg-presalt
 
-Code and data for the article *Reconstructing elemental capture spectroscopy magnesium logs in pre-salt carbonates: a leave-one-well-out comparison of a geochemically informed conditional GAN and random forests* (submitted to Applied Computing and Geosciences).
+Code and data for the article *Reconstructing elemental capture spectroscopy magnesium logs in pre-salt carbonates: a leave-one-well-out comparison of a geochemically informed conditional GAN and random forests* (submitted to Computers & Geosciences).
 
 The repository reconstructs the ECS magnesium log (DWMG) of the Barra Velha Formation, Sapinhoá Field, Santos Basin, and compares random forests with a geochemically informed conditional GAN under leave-one-well-out validation inside each stratigraphic zone.
 
@@ -9,6 +9,7 @@ The repository reconstructs the ECS magnesium log (DWMG) of the Barra Velha Form
 ```
 chemo_exp/            Python package
   data.py             LAS loading, zone assignment, depth windows, synthetic test data
+  impute.py           Reconstruct DWMG in wells where it was not measured
   models.py           Random forest models and the cGAN (1D U-Net generator, 1D PatchGAN discriminator)
   run.py              Main experiment: leave-one-well-out comparison per zone
   controls.py         Controls: predictor set, training wells and forest settings, cGAN-B
@@ -20,6 +21,8 @@ data/
   zone_tops.xlsx      Tops and bases of zones A, B1, B2 and C per well (columns Well, Top, Bottom, Zone)
 results/              Per-well metrics and predictions used in the article
 figures/              Figures of the article (PDF)
+docs/USER_GUIDE.md    Inputs, outputs, options and expected behaviour of every command
+docs/TUTORIAL.md      Step-by-step use cases
 ```
 
 ## Data
@@ -33,6 +36,18 @@ pip install -r requirements.txt
 ```
 
 The experiments were run with Python 3.13, PyTorch 2.15 (CPU), scikit-learn 1.9 and pandas 3.0.
+
+## Reconstructing DWMG in new wells
+
+```bash
+python -m chemo_exp.impute --las-dir data/las --zones data/zone_tops.xlsx --out runs/imputed_dwmg.csv
+```
+
+See `docs/TUTORIAL.md` for a walkthrough and `docs/USER_GUIDE.md` for all options.
+
+## Computational requirements
+
+All experiments run on a CPU. The synthetic test takes a few minutes; reconstructing DWMG for all zones takes a few minutes per zone; the full leave-one-well-out comparison took about 3 hours on two cores, and the controls about 1.5 hours.
 
 ## Reproducing the article
 
