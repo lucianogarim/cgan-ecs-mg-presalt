@@ -2,11 +2,34 @@
 
 Code and data for the article *Reconstructing elemental capture spectroscopy magnesium logs in pre-salt carbonates: a leave-one-well-out comparison of a geochemically informed conditional GAN and random forests* (submitted to Computers & Geosciences).
 
-The repository reconstructs the ECS magnesium log (DWMG) of the Barra Velha Formation, Sapinhoá Field, Santos Basin, and compares random forests with a geochemically informed conditional GAN under leave-one-well-out validation inside each stratigraphic zone.
+## Purpose
+
+Elemental capture spectroscopy (ECS) magnesium logs (DWMG) are missing in many wells. This code reconstructs DWMG from conventional and co-measured ECS logs with a geochemically informed conditional GAN, compares it with random forests under leave-one-well-out validation inside each stratigraphic zone, and reproduces every table and figure of the article. The data are 28 wells of the Barra Velha Formation, Sapinhoá Field, Santos Basin (Brazil).
+
+## Installation
+
+Python 3.10 or later is required (tested with Python 3.13).
+
+```bash
+git clone https://github.com/lucianogarim/cgan-ecs-mg-presalt
+cd cgan-ecs-mg-presalt
+pip install -r requirements.txt
+```
+
+## Quick test
+
+From the repository root:
+
+```bash
+python examples/quick_test.py
+```
+
+The test uses a built-in synthetic dataset, so no real data are needed, and takes about two minutes on a CPU. It runs the leave-one-well-out comparison on one synthetic zone and then reconstructs DWMG in the two synthetic wells without it. It ends with the message `Quick test passed.` and writes its outputs to `runs/quick_test/` (`lowo_per_well.csv` with R², RMSE and MAE per held-out well and model, and `imputed_dwmg.csv` with the reconstructed log). With only five training epochs the cGAN is not converged; the test checks that the pipeline works, not the scores of the article.
 
 ## Contents
 
 ```
+examples/quick_test.py  Quick test on synthetic data
 chemo_exp/            Python package
   data.py             LAS loading, zone assignment, depth windows, synthetic test data
   impute.py           Reconstruct DWMG in wells where it was not measured
@@ -29,13 +52,7 @@ docs/TUTORIAL.md      Step-by-step use cases
 
 Each LAS file contains conventional logs (GR, RHOB, NPHI, DT, PE), spectral gamma ray (HFK, HTHO, HURA), NMR logs (NMRT_FINAL, NMRE_FINAL, NMRFL_FINAL, T2LM, MPERM) and ECS dry-weight fractions (DWCA, DWSI, DWAL, DWFE, DWTI and, in 13 wells, DWMG). Missing values are coded as -9999. Zero values in DWMG and DWAL are values below the tool resolution and are kept as observations.
 
-## Installation
-
-```bash
-pip install -r requirements.txt
-```
-
-The experiments were run with Python 3.13, PyTorch 2.15 (CPU), scikit-learn 1.9 and pandas 3.0.
+The experiments of the article were run with Python 3.13, PyTorch 2.15 (CPU), scikit-learn 1.9 and pandas 3.0.
 
 ## Reconstructing DWMG in new wells
 
@@ -50,12 +67,6 @@ See `docs/TUTORIAL.md` for a walkthrough and `docs/USER_GUIDE.md` for all option
 All experiments run on a CPU. The synthetic test takes a few minutes; reconstructing DWMG for all zones takes a few minutes per zone; the full leave-one-well-out comparison took about 3 hours on two cores, and the controls about 1.5 hours.
 
 ## Reproducing the article
-
-Quick test with synthetic data (a few minutes):
-
-```bash
-python -m chemo_exp.run --synthetic --epochs 5 --out runs/synthetic
-```
 
 Main experiment (RF-II, RF-F, RF-F-ctx, cGAN-F, cGAN-F-stoch, cGAN-F-noPhys and CNN-F-L1), 31 folds:
 
