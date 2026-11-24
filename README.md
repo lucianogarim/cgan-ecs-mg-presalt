@@ -1,6 +1,6 @@
 # cgan-ecs-mg-presalt
 
-Code and data for the article *Reconstructing elemental capture spectroscopy magnesium logs in pre-salt carbonates: a leave-one-well-out comparison of a geochemically informed conditional GAN and random forests* (submitted to Computers & Geosciences).
+Code and data for the article *Reconstructing elemental capture spectroscopy magnesium logs in pre-salt carbonates: a leave-one-well-out comparison of a geochemically informed conditional GAN and random forests* (submitted to Earth Science Informatics).
 
 ## Purpose
 
